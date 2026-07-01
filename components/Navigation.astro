@@ -1,0 +1,32 @@
+---
+// Shared site header / primary navigation for all 2MAG.IO sites.
+//
+// Site-specific content is supplied via slots:
+//   - "logo"    : the glyph SVG + word mark markup (wrapped in the <a> home link)
+//   - "actions" : the right-hand area (a single CTA button, or a .nav-links group)
+interface Props {
+  /** Home link target. */
+  homeHref?: string;
+  /** Accessible label for the home/logo link, e.g. the site name. */
+  ariaLabel: string;
+}
+
+const { homeHref = '/', ariaLabel } = Astro.props;
+---
+
+<nav class="site-nav">
+  <div class="container nav-inner">
+    <a href={homeHref} class="logo" aria-label={ariaLabel}>
+      <slot name="logo" />
+    </a>
+    <slot name="actions" />
+  </div>
+</nav>
+
+<style is:global>
+  .site-nav .logo { flex-direction: row; align-items: center; gap: 10px; }
+  .logo-text { display: flex; flex-direction: column; gap: 1px; line-height: 1; }
+  .logo-glyph { height: 34px; width: auto; flex-shrink: 0; display: block; }
+  /* Nested-span accent in the word mark (e.g. 2MAG.IO). Harmless where unused. */
+  .logo-mark span { color: var(--accent); }
+</style>

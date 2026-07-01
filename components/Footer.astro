@@ -1,0 +1,45 @@
+---
+// Shared site footer for all 2MAG.IO sites.
+//
+// Site-specific content is supplied via slots:
+//   - "brand"  : the word mark + one-line company/venture description
+//   - "social" : the social/contact links (icon + label anchors)
+//   - "copy"   : the copyright / attribution lines
+// The optional IMDA compliance line is passed as a prop (omit to hide it).
+interface Props {
+  /** IMDA licence / compliance line. Omit on sites that do not need it. */
+  complianceLine?: string;
+}
+
+const { complianceLine } = Astro.props;
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <slot name="brand" />
+      </div>
+      <div class="footer-links">
+        <slot name="social" />
+      </div>
+    </div>
+    <hr class="footer-divider" />
+    <div class="footer-copy">
+      <slot name="copy" />
+      {complianceLine && <p class="footer-compliance">{complianceLine}</p>}
+    </div>
+  </div>
+</footer>
+
+<style is:global>
+  .footer-compliance {
+    font-size: 0.78rem;
+    letter-spacing: 0.01em;
+    margin-top: 4px;
+  }
+  /* Standardised social icon size across all three sites (was 14–16px drift). */
+  .footer-links a svg { width: 16px; height: 16px; }
+  /* Nested-span accent in the footer word mark (e.g. 2MAG.IO). */
+  .logo-mark span { color: var(--accent); }
+</style>

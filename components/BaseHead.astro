@@ -1,0 +1,95 @@
+---
+// Shared <head> chrome for all 2MAG.IO sites.
+// Renders the CONTENTS of <head> (no <head> wrapper) — the consuming layout
+// keeps <!DOCTYPE html><html><head>…</head>.
+//
+// Design tokens are NOT bundled here: brand-tokens.css is always served from
+// the CDN (https://brand.2mag.io/brand-tokens.css).
+interface Props {
+  title: string;
+  description: string;
+  canonicalUrl?: string;
+  noindex?: boolean;
+  ogType?: string;
+  ogImage?: string;
+  ogSiteName: string;
+  gaId?: string;
+  /** One JSON-LD object per <script type="application/ld+json"> block. */
+  structuredData?: Record<string, unknown>[];
+}
+
+const {
+  title,
+  description,
+  canonicalUrl = Astro.url.href,
+  noindex = false,
+  ogType = 'website',
+  ogImage,
+  ogSiteName,
+  gaId,
+  structuredData = [],
+} = Astro.props;
+---
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="generator" content={Astro.generator} />
+
+<!-- Favicons -->
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonicalUrl} />
+{noindex && <meta name="robots" content="noindex, nofollow" />}
+
+<!-- Open Graph -->
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:type" content={ogType} />
+<meta property="og:site_name" content={ogSiteName} />
+{ogImage && (
+  <>
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={ogImage} />
+  </>
+)}
+
+<!-- 2MAG Group shared design tokens (served from CDN, never bundled) -->
+<link rel="stylesheet" href="https://brand.2mag.io/brand-tokens.css" />
+
+<!-- Google Fonts — canonical stack (DESIGN.md §2.1) -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..400&family=JetBrains+Mono:wght@400;600;700&display=swap"
+  rel="stylesheet"
+/>
+
+<!-- Structured data -->
+{structuredData.map((schema) => (
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+))}
+
+<!-- Per-page extra head tags (optional) -->
+<slot />
+
+<!-- Google Analytics 4 -->
+{gaId && (
+  <>
+    <script async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
+    <script define:vars={{ gaId }}>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', gaId);
+    </script>
+  </>
+)}
