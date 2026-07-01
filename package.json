@@ -1,0 +1,32 @@
+{
+  "name": "@2mag-io/brand-ui",
+  "version": "0.0.0",
+  "description": "Shared Astro components (Navigation, Footer, BaseHead, ScrollReveal) for 2MAG.IO sites: shg.sg, 2mag.io, 2magnify.com.",
+  "type": "module",
+  "license": "UNLICENSED",
+  "private": false,
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "files": [
+    "components"
+  ],
+  "exports": {
+    "./Navigation.astro": "./components/Navigation.astro",
+    "./Footer.astro": "./components/Footer.astro",
+    "./BaseHead.astro": "./components/BaseHead.astro",
+    "./ScrollReveal.astro": "./components/ScrollReveal.astro"
+  },
+  "peerDependencies": {
+    "astro": ">=5.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/2MAG-IO/brand-ui.git"
+  },
+  "homepage": "https://github.com/2MAG-IO/brand-ui#readme",
+  "bugs": {
+    "url": "https://github.com/2MAG-IO/brand-ui/issues"
+  }
+}
