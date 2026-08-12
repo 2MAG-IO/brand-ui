@@ -1,6 +1,6 @@
 {
   "name": "@2mag-io/brand-ui",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Shared Astro components (Navigation, Footer, BaseHead, ScrollReveal) for 2MAG.IO sites: shg.sg, 2mag.io, 2magnify.com.",
   "type": "module",
   "license": "UNLICENSED",

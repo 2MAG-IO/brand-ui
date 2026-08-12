@@ -43,7 +43,7 @@ Requires Astro `>=5.0.0` (peer dependency).
 
 Publishing is automated. It runs when a **GitHub Release** is published
 (`.github/workflows/publish.yml`), authenticating to npm via
-**Trusted Publishing (OIDC)** — there is no npm token stored in this repo or in
+**Trusted Publishing (OIDC)**: there is no npm token stored in this repo or in
 GitHub secrets. To cut a release:
 
 1. Bump `version` in `package.json`, commit, push to `main`.
