@@ -1,0 +1,25 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "packageRules": [
+    {
+      "description": "peerDependencies state a compatibility range, not a version to track. Narrowing 'astro >=5.0.0' would restrict what consuming sites are allowed to install, so it is a deliberate release decision and never an automated one.",
+      "matchDepTypes": ["peerDependencies"],
+      "enabled": false
+    },
+    {
+      "description": "GitHub Actions in publish.yml are the only thing here with a version to track. Minor and patch auto-merge.",
+      "matchManagers": ["github-actions"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true,
+      "automergeType": "pr",
+      "platformAutomerge": true
+    },
+    {
+      "description": "Major action bumps raise a PR but are never auto-merged: runner and Node version changes ride along with them, and this workflow publishes to npm via OIDC trusted publishing, where a silent auth regression would not surface until release day.",
+      "matchManagers": ["github-actions"],
+      "matchUpdateTypes": ["major"],
+      "automerge": false
+    }
+  ]
+}
